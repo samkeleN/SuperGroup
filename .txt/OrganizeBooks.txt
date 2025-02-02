@@ -1,0 +1,36 @@
+import java.util.*;
+
+public class OrganizeBooks {
+    public static void main(String[] args) {
+        int[] shelf = {1234567, 1234567, 2345678, 2345678, 3456789, 3456789, 1234567, 2345678, 3456789, 4567890, 4567890, 5678901, 5678901, 6789012, 6789012, 1234567, 2345678, 3456789, 4567890, 5678901, 4567890, 5678901};
+        System.out.println(isOrganizable(shelf));
+    }
+    
+    public static String isOrganizable(int[] shelf) {
+        Map<Integer, Integer> countMap = new HashMap<>();
+        
+        for (int book : shelf) {
+            countMap.put(book, countMap.getOrDefault(book, 0) + 1);
+        }
+        
+        int g = -1;
+        for (int count : countMap.values()) {
+            if (g == -1) {
+                g = count;
+            } else {
+                g = gcd(g, count);
+            }
+        }
+        
+        return g > 1 ? "YES" : "NO";
+    }
+    
+    public static int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+}
